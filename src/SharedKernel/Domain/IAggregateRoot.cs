@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Core.Kernel;
+namespace SharedKernel.Domain;
 
-public interface IEntity
-{
-    Guid Id { get; }
-}
+public interface IAggregateRoot : IEntity { }

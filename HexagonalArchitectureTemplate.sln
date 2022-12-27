@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{20987AC8-2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "test\Core.Tests\Core.Tests.csproj", "{A72D4F09-656C-4E2D-A7AC-C9FFFF068D9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "src\SharedKernel\SharedKernel.csproj", "{ECDA72FF-9525-4B7C-9C44-49F496120BA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +30,14 @@ Global
 		{A72D4F09-656C-4E2D-A7AC-C9FFFF068D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A72D4F09-656C-4E2D-A7AC-C9FFFF068D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A72D4F09-656C-4E2D-A7AC-C9FFFF068D9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECDA72FF-9525-4B7C-9C44-49F496120BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECDA72FF-9525-4B7C-9C44-49F496120BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECDA72FF-9525-4B7C-9C44-49F496120BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECDA72FF-9525-4B7C-9C44-49F496120BA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{44D9826B-ED76-4922-870D-EEBF45507BC4} = {D2435281-0D62-4C5E-84FA-AD31A2F6371D}
 		{A72D4F09-656C-4E2D-A7AC-C9FFFF068D9C} = {20987AC8-2FFF-42F6-AA65-AE673DCEFBED}
+		{ECDA72FF-9525-4B7C-9C44-49F496120BA5} = {D2435281-0D62-4C5E-84FA-AD31A2F6371D}
 	EndGlobalSection
 EndGlobal

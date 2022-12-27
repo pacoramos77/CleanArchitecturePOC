@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Application.Abstractions.Messaging;
+namespace SharedKernel.Messaging;
 
 public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand>
     where TCommand : ICommand { }

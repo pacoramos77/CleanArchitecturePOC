@@ -1,4 +1,4 @@
-using Core.Kernel;
+using SharedKernel.Domain;
 
 namespace Core.Domain.ToDoList;
 

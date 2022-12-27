@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Application.Abstractions.Messaging;
+namespace SharedKernel.Messaging;
 
 public interface IQueryHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
     where TRequest : IQuery<TResponse> { }

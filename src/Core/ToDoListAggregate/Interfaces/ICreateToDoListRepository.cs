@@ -2,7 +2,7 @@ using Core.Domain.ToDoList;
 
 namespace Core.Application.CreateToDoList;
 
-public interface IToDoListRepository
+public interface ICreateToDoListRepository
 {
     Task InsertAsync(ToDoList todoList);
 }

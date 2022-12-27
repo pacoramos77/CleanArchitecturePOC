@@ -1,4 +1,4 @@
-namespace Core.Kernel.Abstractions.Store;
+namespace SharedKernel.DataAccess;
 
 public interface IUnitOfWork
 {

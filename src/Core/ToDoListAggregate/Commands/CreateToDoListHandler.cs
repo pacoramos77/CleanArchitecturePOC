@@ -1,16 +1,15 @@
-using Application.Abstractions.Messaging;
-
 using Core.Domain.ToDoList;
-using Core.Kernel.Abstractions.Store;
+using SharedKernel.DataAccess;
+using SharedKernel.Messaging;
 
 namespace Core.Application.CreateToDoList;
 
 public class CreateToDoListHandler : ICommandHandler<CreateToDoListRequest, AddToDoResponse>
 {
-    private readonly IToDoListRepository _repository;
+    private readonly ICreateToDoListRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateToDoListHandler(IToDoListRepository repository, IUnitOfWork unitOfWork)
+    public CreateToDoListHandler(ICreateToDoListRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
@@ -21,6 +20,10 @@ public class CreateToDoListHandler : ICommandHandler<CreateToDoListRequest, AddT
         CancellationToken cancellationToken = default
     )
     {
+        if (string.IsNullOrWhiteSpace(request.Name))
+        {
+            throw new EmptyNameException();
+        }
         var todoList = new ToDoList(request.Name);
         await _repository.InsertAsync(todoList);
 
