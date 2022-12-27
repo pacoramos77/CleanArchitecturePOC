@@ -6,10 +6,13 @@ public class ToDoList : IAggregateRoot
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }
-    public IEnumerable<Item> Items { get => _items; }
+    public IEnumerable<Item> Items
+    {
+        get => _items;
+    }
 
     private IList<Item> _items;
-   
+
     public void AddItem(Item item)
     {
         _items.Add(item);
