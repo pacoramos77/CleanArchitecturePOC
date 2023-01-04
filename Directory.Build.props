@@ -13,11 +13,11 @@
       Condition="$(MSBuildProjectExtension) == '.csproj'"
     />
 
-    <PackageReference
+    <!-- <PackageReference
       Include="CSharpFunctionalExtensions"
       Version="2.37.0"
       Condition="$(MSBuildProjectExtension) == '.csproj'"
-    />
+    /> -->
 
     <PackageReference
       Include="Scrutor"

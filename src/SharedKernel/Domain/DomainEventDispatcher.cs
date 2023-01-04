@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-using SharedKernel.Interfaces;
+using SharedKernel.Data;
 
-namespace CleanArchitectureTemplate.SharedKernel;
+namespace SharedKernel.Domain;
 
 public class DomainEventDispatcher : IDomainEventDispatcher
 {

@@ -24,6 +24,7 @@ public sealed class ValidationBehaviour<TRequest, TResponse>
         {
             return await next().ConfigureAwait(false);
         }
+
         var context = new ValidationContext<TRequest>(request);
         var errors = _validators
             .Select(x => x.Validate(context))
@@ -33,6 +34,7 @@ public sealed class ValidationBehaviour<TRequest, TResponse>
         {
             throw new ValidationException("Validation errors", errors);
         }
+
         return await next().ConfigureAwait(false);
     }
 }

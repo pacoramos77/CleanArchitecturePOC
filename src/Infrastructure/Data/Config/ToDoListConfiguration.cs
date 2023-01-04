@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CleanArchitectureTemplate.Infrastructure.Data.Config;
+namespace Infrastructure.Data.Config;
 
 public class ToDoListConfiguration : IEntityTypeConfiguration<ToDoList>
 {

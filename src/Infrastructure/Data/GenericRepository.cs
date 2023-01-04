@@ -1,10 +1,11 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
 
-using SharedKernel.Interfaces;
+using SharedKernel.Data;
+using SharedKernel.Domain;
 
 namespace Infrastructure.Data;
 
-public class GenericRepository<T> : RepositoryBase<T>, IReadRepository<T>, IRepository<T>, IRepo<T>
+public class GenericRepository<T> : RepositoryBase<T>, IReadRepository<T>, IRepository<T>
     where T : class, IAggregateRoot
 {
     public GenericRepository(AppDbContext dbContext) : base(dbContext) { }

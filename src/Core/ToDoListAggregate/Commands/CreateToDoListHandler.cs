@@ -1,7 +1,6 @@
 using Mapster;
 
-using SharedKernel.DataAccess;
-using SharedKernel.Interfaces;
+using SharedKernel.Data;
 using SharedKernel.Messaging;
 
 namespace Core.ToDoListAggregate.Commands;

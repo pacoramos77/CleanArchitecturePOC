@@ -1,13 +1,11 @@
 ﻿using System.Reflection;
 
-using CleanArchitectureTemplate.SharedKernel;
-
 using Core.ToDoListAggregate;
 
 using Microsoft.EntityFrameworkCore;
 
-using SharedKernel.DataAccess;
-using SharedKernel.Interfaces;
+using SharedKernel.Data;
+using SharedKernel.Domain;
 
 namespace Infrastructure.Data;
 

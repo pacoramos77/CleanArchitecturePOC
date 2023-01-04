@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-using SharedKernel;
+using SharedKernel.Domain;
 
-namespace CleanArchitectureTemplate.SharedKernel;
+namespace SharedKernel.Data;
 
 public abstract class EntityBase : EntityBase<Guid> { }
 

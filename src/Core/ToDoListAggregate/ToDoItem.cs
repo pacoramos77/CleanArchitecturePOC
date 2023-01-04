@@ -1,6 +1,5 @@
-using CleanArchitectureTemplate.SharedKernel;
-
-using SharedKernel.Interfaces;
+using SharedKernel.Data;
+using SharedKernel.Domain;
 
 namespace Core.ToDoListAggregate;
 

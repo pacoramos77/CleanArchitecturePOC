@@ -41,6 +41,9 @@ dotnet_diagnostic.RCS1194.severity = None
 ## StyleCop.Analyzers
 ##
 
+# Refactor 'x' to not reference mutable fields.
+dotnet_diagnostic.S2328.severity = None
+
 # File name must match type name
 dotnet_diagnostic.MA0048.severity = None
 

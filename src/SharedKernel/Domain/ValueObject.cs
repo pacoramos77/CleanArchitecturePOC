@@ -1,8 +1,5 @@
-﻿namespace CleanArchitectureTemplate.SharedKernel;
+﻿namespace SharedKernel.Domain;
 
-/// <summary>
-/// See: https://enterprisecraftsmanship.com/posts/value-object-better-implementation/
-/// </summary>
 [Serializable]
 public abstract class ValueObject : IComparable, IComparable<ValueObject>
 {
@@ -66,6 +63,11 @@ public abstract class ValueObject : IComparable, IComparable<ValueObject>
         return 0;
     }
 
+    public int CompareTo(ValueObject? other)
+    {
+        return CompareTo(other as object);
+    }
+
     private static int CompareComponents(object? object1, object? object2)
     {
         if (object1 is null && object2 is null)
@@ -81,11 +83,6 @@ public abstract class ValueObject : IComparable, IComparable<ValueObject>
             return comparable1.CompareTo(comparable2);
 
         return object1.Equals(object2) ? 0 : -1;
-    }
-
-    public int CompareTo(ValueObject? other)
-    {
-        return CompareTo(other as object);
     }
 
     public static bool operator ==(ValueObject a, ValueObject b)
@@ -108,13 +105,13 @@ public abstract class ValueObject : IComparable, IComparable<ValueObject>
     {
         ArgumentNullException.ThrowIfNull(obj);
 
-        const string EFCoreProxyPrefix = "Castle.Proxies.";
-        const string NHibernateProxyPostfix = "Proxy";
+        const string efCoreProxyPrefix = "Castle.Proxies.";
+        const string nHibernateProxyPostfix = "Proxy";
 
         var type = obj.GetType();
         var typeString = type.ToString();
 
-        if (typeString.Contains(EFCoreProxyPrefix) || typeString.EndsWith(NHibernateProxyPostfix))
+        if (typeString.Contains(efCoreProxyPrefix) || typeString.EndsWith(nHibernateProxyPostfix))
             return type.BaseType!;
 
         return type;

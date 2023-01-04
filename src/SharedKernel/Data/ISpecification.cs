@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace SharedKernel.DataAccess;
+namespace SharedKernel.Data;
 
 public interface ISpecification<T>
 {

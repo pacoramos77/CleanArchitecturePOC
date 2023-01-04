@@ -1,4 +1,4 @@
-namespace SharedKernel.DataAccess;
+namespace SharedKernel.Data;
 
 public interface IUnitOfWork
 {

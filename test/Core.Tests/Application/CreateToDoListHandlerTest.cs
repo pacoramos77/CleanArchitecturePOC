@@ -2,8 +2,7 @@ using Core.ToDoListAggregate;
 using Core.ToDoListAggregate.Commands;
 using Core.ToDoListAggregate.Exceptions;
 
-using SharedKernel.DataAccess;
-using SharedKernel.Interfaces;
+using SharedKernel.Data;
 
 namespace Core.Tests.Application;
 
@@ -30,6 +29,8 @@ public class CreateToDoListHandlerTest
         CreateToDoListHandler handler = new(_repository.Object, _unitOfWork.Object);
         CreateToDoListRequest request = new(Name: "");
 
-        await Assert.ThrowsAsync<EmptyNameException>(() => handler.Handle(request, CancellationToken.None));
+        await Assert.ThrowsAsync<EmptyNameException>(
+            () => handler.Handle(request, CancellationToken.None)
+        );
     }
 }

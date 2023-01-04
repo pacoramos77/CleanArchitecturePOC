@@ -1,6 +1,7 @@
 ﻿using Ardalis.Specification;
 
-namespace SharedKernel.Interfaces;
+using SharedKernel.Domain;
 
-// from Ardalis.Specification
+namespace SharedKernel.Data;
+
 public interface IRepository<T> : IRepositoryBase<T> where T : class, IAggregateRoot { }

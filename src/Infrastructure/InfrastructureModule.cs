@@ -1,5 +1,3 @@
-using CleanArchitectureTemplate.SharedKernel;
-
 using Core.ToDoListAggregate;
 
 using Infrastructure.Data;
@@ -9,12 +7,12 @@ using Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-using SharedKernel.DataAccess;
-using SharedKernel.Interfaces;
+using SharedKernel.Data;
+using SharedKernel.Domain;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class InfrastructureServices
+public static class InfrastructureModule
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
@@ -39,21 +37,11 @@ public static class InfrastructureServices
             }
         );
 
-        services.AddScoped<IRepository<ToDoList>, GenericRepository<ToDoList>>();
-        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
-        services.AddScoped<IUnitOfWork, AppDbContext>();
-        return services;
+        services
+            .AddSharedKernelServices()
+            .AddScoped<IRepository<ToDoList>, GenericRepository<ToDoList>>()
+            .AddScoped<IUnitOfWork, AppDbContext>();
 
-        // return services.Scan(
-        //     selector =>
-        //         selector
-        //             .FromAssemblies(typeof(InfrastructureServices).Assembly)
-        //             .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Repository")))
-        //             .AsImplementedInterfaces()
-        //             .WithScopedLifetime()
-        //             .AddClasses(classes => classes.AssignableTo<IUnitOfWork>())
-        //             .AsImplementedInterfaces()
-        //             .WithScopedLifetime()
-        // );
+        return services;
     }
 }

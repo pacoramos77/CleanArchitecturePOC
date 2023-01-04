@@ -1,8 +1,6 @@
 using System.Linq.Expressions;
 
-using SharedKernel.DataAccess;
-
-namespace Core.Kernel;
+namespace SharedKernel.Data;
 
 public abstract class BaseSpecification<T> : ISpecification<T>
 {
