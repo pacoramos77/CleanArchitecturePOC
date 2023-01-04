@@ -6,7 +6,8 @@ namespace Core.ToDoListAggregate;
 
 public class ToDoList : EntityBase, IAggregateRoot
 {
-    public required string Name { get; set; }
+    required public string Name { get; set; }
+
     public IEnumerable<ToDoItem> Items
     {
         get => _items;

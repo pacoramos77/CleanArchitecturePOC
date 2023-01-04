@@ -6,8 +6,8 @@ using SharedKernel.Messaging;
 
 namespace Core.Common.Behaviors;
 
-public sealed class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : class, ICommand<TResponse>
+public sealed class ValidationBehaviour<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse> where TRequest : class, ICommand<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 

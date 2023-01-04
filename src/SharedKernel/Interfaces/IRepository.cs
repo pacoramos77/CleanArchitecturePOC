@@ -5,9 +5,4 @@ using System.Threading.Tasks;
 
 namespace SharedKernel.Interfaces;
 
-public interface IEntity : IEntity<Guid> { }
-
-public interface IEntity<out T>
-{
-    T Id { get; }
-}
+public interface IRepo<Entity> {}

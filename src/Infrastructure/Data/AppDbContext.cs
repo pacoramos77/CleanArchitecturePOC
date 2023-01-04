@@ -6,11 +6,12 @@ using Core.ToDoListAggregate;
 
 using Microsoft.EntityFrameworkCore;
 
+using SharedKernel.DataAccess;
 using SharedKernel.Interfaces;
 
-namespace CleanArchitectureTemplate.Infrastructure.Data;
+namespace Infrastructure.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext : DbContext, IUnitOfWork
 {
     private readonly IDomainEventDispatcher? _dispatcher;
 
@@ -29,11 +30,9 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
-    public override async Task<int> SaveChangesAsync(
-        CancellationToken cancellationToken = new CancellationToken()
-    )
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        int result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        var result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         // ignore events if no dispatcher provided
         if (_dispatcher == null)

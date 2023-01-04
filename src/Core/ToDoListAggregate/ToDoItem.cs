@@ -6,8 +6,10 @@ namespace Core.ToDoListAggregate;
 
 public class ToDoItem : EntityBase, IEntity
 {
-    public string Description { get; }
+    required public string Description { get; set; }
     public bool Done { get; }
+
+    public ToDoItem() { }
 
     public ToDoItem(string description, bool done = false)
     {
