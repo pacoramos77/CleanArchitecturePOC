@@ -1,10 +1,13 @@
-using Core.Domain.ToDoList;
+using Core.ToDoListAggregate.Repositories;
+
+using Mapster;
+
 using SharedKernel.DataAccess;
 using SharedKernel.Messaging;
 
-namespace Core.Application.CreateToDoList;
+namespace Core.ToDoListAggregate.Commands;
 
-public class CreateToDoListHandler : ICommandHandler<CreateToDoListRequest, AddToDoResponse>
+public class CreateToDoListHandler : ICommandHandler<CreateToDoListRequest, CreateToDoListResponse>
 {
     private readonly ICreateToDoListRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
@@ -15,31 +18,17 @@ public class CreateToDoListHandler : ICommandHandler<CreateToDoListRequest, AddT
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<AddToDoResponse> Handle(
+    public async Task<CreateToDoListResponse> Handle(
         CreateToDoListRequest request,
         CancellationToken cancellationToken = default
     )
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
-        {
-            throw new EmptyNameException();
-        }
-        var todoList = new ToDoList(request.Name);
-        await _repository.InsertAsync(todoList);
+        ToDoList todoList = request.Adapt<ToDoList>();
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _repository.InsertAsync(todoList, cancellationToken).ConfigureAwait(false);
 
-        return new AddToDoResponse { Id = todoList.Id.ToString(), Name = todoList.Name };
+        await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+        return todoList.Adapt<CreateToDoListResponse>();
     }
-}
-
-public class CreateToDoListRequest : ICommand<AddToDoResponse>
-{
-    public string Name { get; set; } = string.Empty;
-}
-
-public class AddToDoResponse
-{
-    public string Id { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
 }

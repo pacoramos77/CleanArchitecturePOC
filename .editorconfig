@@ -41,6 +41,12 @@ dotnet_diagnostic.RCS1194.severity = None
 ## StyleCop.Analyzers
 ##
 
+# File name must match type name
+dotnet_diagnostic.MA0048.severity = None
+
+# Method overrides should not change default values
+dotnet_diagnostic.MA0061.severity = None
+
 # Object initialization can be simplified
 dotnet_diagnostic.IDE0017.severity = None
 

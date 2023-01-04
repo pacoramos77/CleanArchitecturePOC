@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Core.ToDoListAggregate.Commands;
+using Core.ToDoListAggregate.Exceptions;
+using Core.ToDoListAggregate.Repositories;
 
-using Core.Application.CreateToDoList;
-using Core.Kernel.Abstractions.Store;
+using SharedKernel.DataAccess;
 
 namespace Core.Tests.Application;
 
@@ -16,8 +14,8 @@ public class CreateToDoListHandlerTest
     [Fact]
     public async Task Should_Handle_CreateToDoList()
     {
-        CreateToDoListHandler handler = new (_repository.Object, _unitOfWork.Object);
-        CreateToDoListRequest request = new ()  { Name = "new name" };
+        CreateToDoListHandler handler = new(_repository.Object, _unitOfWork.Object);
+        CreateToDoListRequest request = new(Name: "new name");
 
         var response = await handler.Handle(request);
 
@@ -28,12 +26,9 @@ public class CreateToDoListHandlerTest
     [Fact]
     public async Task Should_Fail_WithEmptyName()
     {
-        CreateToDoListHandler handler = new (_repository.Object, _unitOfWork.Object);
-        CreateToDoListRequest request = new () { Name = "" };
+        CreateToDoListHandler handler = new(_repository.Object, _unitOfWork.Object);
+        CreateToDoListRequest request = new(Name: "");
 
-        var response = await handler.Handle(request);
-
-        response.Id.Should().NotBeEmpty();
-        response.Name.Should().Be("new name");
+        await Assert.ThrowsAsync<EmptyNameException>(() => handler.Handle(request));
     }
 }

@@ -1,42 +1,34 @@
-using SharedKernel.Domain;
+using CleanArchitectureTemplate.SharedKernel;
 
-namespace Core.Domain.ToDoList;
+using SharedKernel.Interfaces;
 
-public class ToDoList : IAggregateRoot
+namespace Core.ToDoListAggregate;
+
+public class ToDoList : EntityBase, IAggregateRoot
 {
-    public Guid Id { get; private set; }
-    public string Name { get; private set; }
-    public IEnumerable<Item> Items
+    public required string Name { get; set; }
+    public IEnumerable<ToDoItem> Items
     {
         get => _items;
     }
 
-    private IList<Item> _items;
+    private IList<ToDoItem> _items;
 
-    public void AddItem(Item item)
+    public void AddItem(ToDoItem item)
     {
         _items.Add(item);
     }
 
-    public ToDoList(string name)
+    public ToDoList()
     {
         Id = Guid.NewGuid();
-        Name = name;
-        _items = new List<Item>();
+        _items = new List<ToDoItem>();
     }
 
-    private ToDoList()
+    public static ToDoList Load(Guid id, string name, IList<ToDoItem> items)
     {
-        Name = "";
-        _items = new List<Item>();
-    }
+        var todoList = new ToDoList() { Id = id, Name = name };
 
-    public static ToDoList Load(Guid id, string name, IList<Item> items)
-    {
-        var todoList = new ToDoList();
-
-        todoList.Id = id;
-        todoList.Name = name;
         todoList._items = items;
 
         return todoList;

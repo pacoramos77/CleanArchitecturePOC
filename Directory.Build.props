@@ -1,0 +1,29 @@
+<Project>
+  <ItemGroup>
+    <PackageReference
+      Include="StyleCop.Analyzers"
+      Version="1.1.118"
+      PrivateAssets="all"
+      Condition="$(MSBuildProjectExtension) == '.csproj'"
+    />
+    <PackageReference
+      Include="SonarAnalyzer.CSharp"
+      Version="8.50.0.58025"
+      PrivateAssets="all"
+      Condition="$(MSBuildProjectExtension) == '.csproj'"
+    />
+
+    <PackageReference
+      Include="CSharpFunctionalExtensions"
+      Version="2.37.0"
+      Condition="$(MSBuildProjectExtension) == '.csproj'"
+    />
+
+    <PackageReference
+      Include="Scrutor"
+      Version="4.2.0"
+      Condition="$(MSBuildProjectExtension) == '.csproj'"
+    />
+  </ItemGroup>
+</Project>
+  

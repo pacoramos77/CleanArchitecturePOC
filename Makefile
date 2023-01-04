@@ -1,12 +1,12 @@
 dev:
 	docker compose up -d
-	dotnet watch --project src/webapi run
+	dotnet watch --project src/WebApi run
 
 start:
-	dotnet run --project src/webapi
+	dotnet run --project src/WebApi
 
 add-migration:
-	dotnet ef migrations add "SampleMigration" --project src/External/Infrastructure --startup-project src/webapi --output-dir Migrations
+	dotnet ef migrations add "SampleMigration" --project src/Infrastructure --startup-project src/WebApi --output-dir Migrations
 
 test:
 	dotnet watch --project test/Core.Tests test

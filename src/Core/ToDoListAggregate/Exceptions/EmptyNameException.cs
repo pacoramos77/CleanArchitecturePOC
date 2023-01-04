@@ -1,12 +1,9 @@
 using SharedKernel.Domain;
 
-namespace Core.Application.CreateToDoList;
+namespace Core.ToDoListAggregate.Exceptions;
 
 [Serializable]
 public class EmptyNameException : DomainException
 {
-    public EmptyNameException()
-        : base("Name should not be empty.")
-    {
-    }
+    public EmptyNameException() : base("Name should not be empty.") { }
 }
