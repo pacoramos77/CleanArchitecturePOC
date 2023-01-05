@@ -6,6 +6,8 @@ public class CreateToDoListValidator : AbstractValidator<CreateToDoListRequest>
 {
     public CreateToDoListValidator()
     {
-        RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
+        RuleFor(x => x.Name)
+            .NotEmpty()
+            .MaximumLength(100);
     }
 }

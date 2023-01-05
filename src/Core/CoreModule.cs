@@ -1,10 +1,10 @@
 using System.Reflection;
 
-using Core.Common.Behaviors;
-
 using FluentValidation;
 
 using MediatR;
+
+using SharedKernel.Behaviors;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

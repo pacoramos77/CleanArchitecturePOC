@@ -4,7 +4,9 @@ using MediatR;
 
 using SharedKernel.Messaging;
 
-namespace Core.Common.Behaviors;
+using ValidationException = SharedKernel.Exceptions.ValidationException;
+
+namespace SharedKernel.Behaviors;
 
 public sealed class ValidationBehaviour<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse> where TRequest : class, ICommand<TResponse>
@@ -26,13 +28,20 @@ public sealed class ValidationBehaviour<TRequest, TResponse>
         }
 
         var context = new ValidationContext<TRequest>(request);
-        var errors = _validators
+        var errorsDictionary = _validators
             .Select(x => x.Validate(context))
             .SelectMany(x => x.Errors)
-            .Where(x => x != null);
-        if (errors.Any())
+            .Where(x => x != null)
+            .GroupBy(
+                x => x.PropertyName,
+                x => x.ErrorMessage,
+                (propertyName, errorMessages) =>
+                    new { Key = propertyName, Values = errorMessages.Distinct().ToArray() }
+            )
+            .ToDictionary(x => x.Key, x => x.Values);
+        if (errorsDictionary.Any())
         {
-            throw new ValidationException("Validation errors", errors);
+            throw new ValidationException(errorsDictionary);
         }
 
         return await next().ConfigureAwait(false);

@@ -1,4 +1,5 @@
 using SharedKernel.Domain;
+using SharedKernel.Exceptions;
 
 namespace Core.ToDoListAggregate.Exceptions;
 
