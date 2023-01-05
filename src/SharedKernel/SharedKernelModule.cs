@@ -4,9 +4,11 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class SharedKernelModule
 {
-    public static IServiceCollection AddSharedKernelServices(this IServiceCollection services)
-    {
-        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
-        return services;
-    }
+    public static IServiceCollection AddDomainEventDispatcher(this IServiceCollection services) =>
+        services.AddEventDispatcher<DomainEventDispatcher>();
+
+    public static IServiceCollection AddEventDispatcher<TEventDispatcher>(
+        this IServiceCollection services
+    ) where TEventDispatcher : class, IDomainEventDispatcher =>
+        services.AddScoped<IDomainEventDispatcher, TEventDispatcher>();
 }

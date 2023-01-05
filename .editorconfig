@@ -31,6 +31,9 @@ insert_final_newline = false
 ## roslynator
 ##
 
+# Single-line comments should not be followed by blank line
+dotnet_diagnostic.SA1512.severity = None
+
 # 'if' statement can be simplified 
 dotnet_diagnostic.IDE0046.severity = None
 

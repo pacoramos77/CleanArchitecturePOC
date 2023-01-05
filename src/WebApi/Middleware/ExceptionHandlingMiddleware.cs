@@ -10,7 +10,8 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
 {
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-    public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger) => _logger = logger;
+    public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger) =>
+        _logger = logger;
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
@@ -18,11 +19,14 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
         {
             await next(context);
         }
-        catch (Exception e)
+        catch (ApplicationException ex)
         {
-            _logger.LogError(e, e.Message);
-
-            await HandleExceptionAsync(context, e);
+            await HandleExceptionAsync(context, ex);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "{Message}", GetExceptionMessage(ex));
+            await HandleExceptionAsync(context, ex);
         }
     }
 
@@ -34,7 +38,7 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
         {
             Title = GetTitle(exception),
             Status = statusCode,
-            Detail = exception.Message,
+            Detail = GetExceptionMessage(exception),
             Errors = GetErrors(exception)
         };
 
@@ -61,15 +65,20 @@ internal sealed class ExceptionHandlingMiddleware : IMiddleware
             _ => "Server Error"
         };
 
-    private static IReadOnlyDictionary<string, string[]> GetErrors(Exception exception)
-    {
-        IReadOnlyDictionary<string, string[]> errors = null;
-
-        if (exception is ValidationException validationException)
+    private static IReadOnlyDictionary<string, string[]>? GetErrors(Exception exception) =>
+        exception switch
         {
-            errors = validationException.ErrorsDictionary;
+            ValidationException validationException => validationException.ErrorsDictionary,
+            _ => null
+        };
+
+    private static string GetExceptionMessage(Exception ex)
+    {
+        if (ex.InnerException is not null)
+        {
+            return GetExceptionMessage(ex.InnerException);
         }
 
-        return errors;
+        return ex.Message;
     }
 }

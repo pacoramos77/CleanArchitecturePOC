@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
 
-using Core.ToDoListAggregate;
-
 using Microsoft.EntityFrameworkCore;
 
 using SharedKernel.Data;
@@ -11,16 +9,10 @@ namespace Infrastructure.Data;
 
 public class AppDbContext : DbContext, IUnitOfWork
 {
-    private readonly IDomainEventDispatcher? _dispatcher;
+    private readonly IDomainEventDispatcher _dispatcher;
 
-    public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher? dispatcher)
-        : base(options)
-    {
-        _dispatcher = dispatcher;
-    }
-
-    public DbSet<ToDoList> ToDoLists => Set<ToDoList>();
-    public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
+    public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher)
+        : base(options) => _dispatcher = dispatcher;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,10 +23,6 @@ public class AppDbContext : DbContext, IUnitOfWork
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-
-        // ignore events if no dispatcher provided
-        if (_dispatcher == null)
-            return result;
 
         // dispatch events only if save was successful
         var entitiesWithEvents = ChangeTracker
