@@ -38,7 +38,7 @@ public static class InfrastructureModule
         );
 
         services
-            .AddDomainEventDispatcher()
+            .AddEventDispatcher<DomainEventDispatcher>()
             .AddScoped<IRepository<ToDoList>, GenericRepository<ToDoList>>()
             .AddScoped<IUnitOfWork, AppDbContext>();
 
