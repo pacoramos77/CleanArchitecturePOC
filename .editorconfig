@@ -44,6 +44,12 @@ dotnet_diagnostic.RCS1194.severity = None
 ## StyleCop.Analyzers
 ##
 
+# Complete the task associated to this 'TODO' comment.
+dotnet_diagnostic.S1135.severity = None
+
+# Unnecessary interpolated string.
+dotnet_diagnostic.RCS1214.severity = None
+
 # Refactor 'x' to not reference mutable fields.
 dotnet_diagnostic.S2328.severity = None
 

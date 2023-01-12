@@ -1,7 +1,7 @@
 using Core.ToDoListAggregate;
 
 using Infrastructure.Data;
-
+using Infrastructure.Data.Interceptors;
 using Infrastructure.Options;
 
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +18,12 @@ public static class InfrastructureModule
     {
         services.ConfigureOptions<DatabaseOptionsSetup>();
 
+        services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
         services.AddDbContext<AppDbContext>(
             (serviceProvier, options) =>
             {
-                var databaseOptions = serviceProvier.GetService<IOptions<DatabaseOptions>>()!.Value;
+                var databaseOptions = serviceProvier.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+                var interceptor = serviceProvier.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
 
                 options.UseSqlServer(
                     databaseOptions.ConnectionString,
@@ -30,7 +32,7 @@ public static class InfrastructureModule
                         sqlServerAction.EnableRetryOnFailure(databaseOptions.MaxRetryCount);
                         sqlServerAction.CommandTimeout(databaseOptions.CommandTimeout);
                     }
-                );
+                ).AddInterceptors(interceptor);
 
                 options.EnableDetailedErrors(databaseOptions.EnableDetailedErrors);
                 options.EnableSensitiveDataLogging(databaseOptions.EnableSensitiveDataLogging);
@@ -38,7 +40,6 @@ public static class InfrastructureModule
         );
 
         services
-            .AddEventDispatcher<DomainEventDispatcher>()
             .AddScoped<IRepository<ToDoList>, GenericRepository<ToDoList>>()
             .AddScoped<IUnitOfWork, AppDbContext>();
 

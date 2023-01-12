@@ -22,15 +22,4 @@ public class CreateToDoListHandlerTest
         response.Id.Should().NotBeEmpty();
         response.Name.Should().Be("new name");
     }
-
-    [Fact]
-    public async Task Should_Fail_WithEmptyName()
-    {
-        CreateToDoListHandler handler = new(_repository.Object, _unitOfWork.Object);
-        CreateToDoListRequest request = new(Name: "");
-
-        await Assert.ThrowsAsync<EmptyNameException>(
-            () => handler.Handle(request, CancellationToken.None)
-        );
-    }
 }

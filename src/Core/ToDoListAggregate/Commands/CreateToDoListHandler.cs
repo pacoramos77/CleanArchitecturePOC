@@ -21,7 +21,7 @@ public class CreateToDoListHandler : ICommandHandler<CreateToDoListRequest, Crea
         CancellationToken cancellationToken
     )
     {
-        ToDoList todoList = request.Adapt<ToDoList>();
+        ToDoList todoList = ToDoList.Create(request);
 
         await _repository.AddAsync(todoList, cancellationToken).ConfigureAwait(false);
 

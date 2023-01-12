@@ -12,11 +12,10 @@ public abstract class EntityBase<TId>
 
     private readonly List<DomainEventBase> _domainEvents = new();
 
-    [NotMapped]
-    public IEnumerable<DomainEventBase> DomainEvents => _domainEvents.AsReadOnly();
+    public IReadOnlyCollection<DomainEventBase> GetDomainEvents() => _domainEvents.AsReadOnly();
 
-    protected void RegisterDomainEvent(DomainEventBase domainEvent) =>
+    protected void RaiseDomainEvent(DomainEventBase domainEvent) =>
         _domainEvents.Add(domainEvent);
 
-    internal void ClearDomainEvents() => _domainEvents.Clear();
+    public void ClearDomainEvents() => _domainEvents.Clear();
 }

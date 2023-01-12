@@ -16,9 +16,4 @@ public static class SharedKernelModule
 
         return services;
     }
-
-    public static IServiceCollection AddEventDispatcher<TEventDispatcher>(
-        this IServiceCollection services
-    ) where TEventDispatcher : class, IDomainEventDispatcher =>
-        services.AddScoped<IDomainEventDispatcher, TEventDispatcher>();
 }

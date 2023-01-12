@@ -1,3 +1,8 @@
+using Core.ToDoListAggregate.Commands;
+using Core.ToDoListAggregate.Events;
+
+using Mapster;
+
 using SharedKernel.Data;
 using SharedKernel.Domain;
 
@@ -10,6 +15,7 @@ public class ToDoList : EntityBase, IAggregateRoot
     public IEnumerable<ToDoItem> Items
     {
         get => _items;
+        set => _items = value.ToList();
     }
 
     private IList<ToDoItem> _items;
@@ -32,5 +38,12 @@ public class ToDoList : EntityBase, IAggregateRoot
         todoList._items = items;
 
         return todoList;
+    }
+
+    public static ToDoList Create(CreateToDoListRequest request)
+    {
+        var toDoList = request.Adapt<ToDoList>();
+        toDoList.RaiseDomainEvent(new ToDoListCreatedEvent { Name = toDoList.Name });
+        return toDoList;
     }
 }
