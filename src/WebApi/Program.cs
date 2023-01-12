@@ -1,5 +1,9 @@
 using Hellang.Middleware.ProblemDetails;
 
+using Infrastructure.BackgroundJobs;
+
+using Quartz;
+
 using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +13,26 @@ builder.Services.AddCoreServices().AddInfrastructureServices();
 
 // builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 builder.Services.AddCustomProblemDetails();
+
+builder.Services.AddQuartz(configure =>
+{
+    var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
+
+    configure
+        .AddJob<ProcessOutboxMessagesJob>(jobKey)
+        .AddTrigger(
+            trigger =>
+                trigger
+                    .ForJob(jobKey)
+                    .WithSimpleSchedule(
+                        schedule => schedule.WithIntervalInSeconds(10).RepeatForever()
+                    )
+        );
+
+    configure.UseMicrosoftDependencyInjectionJobFactory();
+});
+
+builder.Services.AddQuartzHostedService();
 
 builder.Services.AddControllers();
 

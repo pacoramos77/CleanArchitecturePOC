@@ -22,17 +22,22 @@ public static class InfrastructureModule
         services.AddDbContext<AppDbContext>(
             (serviceProvier, options) =>
             {
-                var databaseOptions = serviceProvier.GetRequiredService<IOptions<DatabaseOptions>>().Value;
-                var interceptor = serviceProvier.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
+                var databaseOptions = serviceProvier
+                    .GetRequiredService<IOptions<DatabaseOptions>>()
+                    .Value;
+                var interceptor =
+                    serviceProvier.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
 
-                options.UseSqlServer(
-                    databaseOptions.ConnectionString,
-                    sqlServerAction =>
-                    {
-                        sqlServerAction.EnableRetryOnFailure(databaseOptions.MaxRetryCount);
-                        sqlServerAction.CommandTimeout(databaseOptions.CommandTimeout);
-                    }
-                ).AddInterceptors(interceptor);
+                options
+                    .UseSqlServer(
+                        databaseOptions.ConnectionString,
+                        sqlServerAction =>
+                        {
+                            sqlServerAction.EnableRetryOnFailure(databaseOptions.MaxRetryCount);
+                            sqlServerAction.CommandTimeout(databaseOptions.CommandTimeout);
+                        }
+                    )
+                    .AddInterceptors(interceptor);
 
                 options.EnableDetailedErrors(databaseOptions.EnableDetailedErrors);
                 options.EnableSensitiveDataLogging(databaseOptions.EnableSensitiveDataLogging);

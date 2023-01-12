@@ -2,8 +2,5 @@
 
 public abstract class DomainException : ApplicationException
 {
-    protected DomainException(string message)
-        : base("Domain Exception", message)
-    {
-    }
+    protected DomainException(string message) : base("Domain Exception", message) { }
 }

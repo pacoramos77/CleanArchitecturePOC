@@ -5,7 +5,6 @@ using Infrastructure.Data.Outbox;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 using SharedKernel.Data;
-using SharedKernel.Domain;
 
 namespace Infrastructure.Data.Interceptors;
 
@@ -37,17 +36,13 @@ public class ConvertDomainEventsToOutboxMessagesInterceptor : SaveChangesInterce
             })
             .Select(
                 domainEvent =>
-                {
-                    var content = DomainEventsSerializer.Serialize(domainEvent);
-
-                    return new OutboxMessage
+                    new OutboxMessage
                     {
                         Id = Guid.NewGuid(),
                         OcurredOnUtc = DateTime.UtcNow,
                         Type = domainEvent.GetType().Name,
-                        Content = content
-                    };
-                }
+                        Content = DomainEventsSerializer.Serialize(domainEvent)
+                    }
             )
             .ToList();
 

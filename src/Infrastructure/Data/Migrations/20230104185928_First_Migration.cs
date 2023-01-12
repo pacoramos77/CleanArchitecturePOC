@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -13,24 +14,24 @@ namespace Infrastructure.Data.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "ToDoLists",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ToDoLists", x => x.Id);
-                });
+                columns: table =>
+                    new
+                    {
+                        Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                        Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    },
+                constraints: table => table.PrimaryKey("PK_ToDoLists", x => x.Id)
+            );
 
             migrationBuilder.CreateTable(
                 name: "ToDoItems",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToDoListId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                        Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                        ToDoListId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ToDoItems", x => x.Id);
@@ -38,23 +39,24 @@ namespace Infrastructure.Data.Migrations
                         name: "FK_ToDoItems_ToDoLists_ToDoListId",
                         column: x => x.ToDoListId,
                         principalTable: "ToDoLists",
-                        principalColumn: "Id");
-                });
+                        principalColumn: "Id"
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ToDoItems_ToDoListId",
                 table: "ToDoItems",
-                column: "ToDoListId");
+                column: "ToDoListId"
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ToDoItems");
+            migrationBuilder.DropTable(name: "ToDoItems");
 
-            migrationBuilder.DropTable(
-                name: "ToDoLists");
+            migrationBuilder.DropTable(name: "ToDoLists");
         }
     }
 }

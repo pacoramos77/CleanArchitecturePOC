@@ -14,8 +14,7 @@ public abstract class EntityBase<TId>
 
     public IReadOnlyCollection<DomainEventBase> GetDomainEvents() => _domainEvents.AsReadOnly();
 
-    protected void RaiseDomainEvent(DomainEventBase domainEvent) =>
-        _domainEvents.Add(domainEvent);
+    protected void RaiseDomainEvent(DomainEventBase domainEvent) => _domainEvents.Add(domainEvent);
 
     public void ClearDomainEvents() => _domainEvents.Clear();
 }

@@ -3,14 +3,12 @@
 using Microsoft.EntityFrameworkCore;
 
 using SharedKernel.Data;
-using SharedKernel.Domain;
 
 namespace Infrastructure.Data;
 
 public class AppDbContext : DbContext, IUnitOfWork
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options) { }
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
