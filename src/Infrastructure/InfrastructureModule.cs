@@ -2,7 +2,10 @@ using Core.ToDoListAggregate;
 
 using Infrastructure.Data;
 using Infrastructure.Data.Interceptors;
+using Infrastructure.Idempotence;
 using Infrastructure.Options;
+
+using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -17,6 +20,8 @@ public static class InfrastructureModule
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
         services.ConfigureOptions<DatabaseOptionsSetup>();
+
+        services.Decorate(typeof(INotificationHandler<>), typeof(IdempotentDomainEventHandler<>));
 
         services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
         services.AddDbContext<AppDbContext>(

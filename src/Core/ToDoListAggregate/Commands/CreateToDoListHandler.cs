@@ -5,7 +5,7 @@ using SharedKernel.Messaging;
 
 namespace Core.ToDoListAggregate.Commands;
 
-public class CreateToDoListHandler : ICommandHandler<CreateToDoListRequest, CreateToDoListResponse>
+internal class CreateToDoListHandler : ICommandHandler<CreateToDoListRequest, CreateToDoListResponse>
 {
     private readonly IRepository<ToDoList> _repository;
     private readonly IUnitOfWork _unitOfWork;

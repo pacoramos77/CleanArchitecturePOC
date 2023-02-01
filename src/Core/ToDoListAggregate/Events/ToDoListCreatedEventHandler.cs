@@ -1,3 +1,5 @@
+using System.Globalization;
+
 using SharedKernel.Domain;
 
 namespace Core.ToDoListAggregate.Events;
@@ -6,7 +8,7 @@ public class ToDoListCreatedEventHandler : IDomainEventHandler<ToDoListCreatedEv
 {
     public Task Handle(ToDoListCreatedEvent notification, CancellationToken cancellationToken)
     {
-        Console.WriteLine("ToDoListCreatedEventHandler");
+        Console.WriteLine($"------ ToDoListCreatedEventHandler ----- {notification.Name}, {notification.DateOccurred.ToLongTimeString()} ------");
         return Task.CompletedTask;
     }
 }

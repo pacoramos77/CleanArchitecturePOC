@@ -14,7 +14,7 @@ POST http://localhost:5045/api/todo HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "hola"
+    "name": "Note"
 }
 
 ###

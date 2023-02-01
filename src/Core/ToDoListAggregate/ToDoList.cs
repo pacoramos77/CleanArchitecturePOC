@@ -1,5 +1,6 @@
 using Core.ToDoListAggregate.Commands;
 using Core.ToDoListAggregate.Events;
+using Core.ToDoListAggregate.Exceptions;
 
 using Mapster;
 
@@ -27,7 +28,7 @@ public class ToDoList : EntityBase, IAggregateRoot
 
     public ToDoList()
     {
-        Id = Guid.NewGuid();
+        Id = GuidProvider.NewGuid();
         _items = new List<ToDoItem>();
     }
 
@@ -42,6 +43,11 @@ public class ToDoList : EntityBase, IAggregateRoot
 
     public static ToDoList Create(CreateToDoListRequest request)
     {
+        if (string.IsNullOrWhiteSpace(request.Name))
+        {
+            throw new EmptyNameException();
+        }
+
         var toDoList = request.Adapt<ToDoList>();
         toDoList.RaiseDomainEvent(new ToDoListCreatedEvent { Name = toDoList.Name });
         return toDoList;

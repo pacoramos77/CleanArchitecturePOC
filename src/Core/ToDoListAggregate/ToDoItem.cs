@@ -12,7 +12,7 @@ public class ToDoItem : EntityBase, IEntity
 
     public ToDoItem(string description, bool done = false)
     {
-        Id = Guid.NewGuid();
+        Id = GuidProvider.NewGuid();
         Description = description;
         Done = done;
     }
